@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jlet.js"></script>
+    <script type="text/javascript" src="jlet_console.js"></script>
+    <script type="text/javascript">
+
+        //$console.create();
+    </script>
+</head>
+<body>
+    <img id="img1" style="width:200px;position:absolute;top:50px;left:100px" src="美女1.jpg" />
+    <img id="img2" style="width:200px;position:absolute;top:250px;left:300px" src="美女1.jpg" />
+    <img id="img3" style="width:200px;position:absolute;top:250px;left:600px" src="美女1.jpg" />
+
+    <script type="text/javascript">
+
+        var img1 = document.getElementById("img1");
+        var img2 = document.getElementById("img2");
+        var img3 = document.getElementById("img3");
+
+        var ani1 = $animation.create(ani_action1, 50);
+        var ani2 = $animation.create(ani_action2, 50);
+
+        var ani3 = $animation.create(ani_action3, 30);
+        ani3.moveStepPx = 2;
+        ani3.rotateStepDeg = 1.8;
+        ani3.angle = 0;
+
+        $animation.start(ani1);
+        $animation.start(ani2);
+        $animation.start(ani3);
+
+        function ani_action1( ani )
+        {
+            var angle = 0.36 * ani.stepCount;
+
+            img1.style.transform = "rotate(" + angle + "deg)";
+
+            if (angle == 360)
+                ani.stepCount = 0;
+
+            ani.stepCount++;
+        }
+
+        function ani_action2(ani)
+        {
+            var angle = 3.6 * ani.stepCount;
+
+            img2.style.transform = "rotateY(" + angle + "deg)";
+
+            if (angle == 360)
+                ani.stepCount = 0;
+
+            ani.stepCount++;
+        }
+
+        function ani_action3(ani)
+        {
+            if (img3.offsetLeft > (document.documentElement.offsetWidth - 400)
+                || img3.offsetLeft < 200)
+            {
+                ani.moveStepPx = ani.moveStepPx * -1;
+                ani.rotateStepDeg = ani.rotateStepDeg * -1;
+            }
+            
+            ani.angle = ani.angle + ani.rotateStepDeg;
+
+            img3.style.transform = "rotate(" + ani.angle + "deg)";
+            img3.style.left = (img3.offsetLeft + ani.moveStepPx) + "px";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jlet.js"></script>
+</head>
+<body>
+    <div style="height:50px;">
+        <input type="button" value="重复播放" style="width:200px; height:45px; font-size:30px"
+               onclick=" $animation.start(ani1); $animation.start(ani2); " />
+    </div>
+    <div id="div1" style="width:400px;height:800px; border:solid 1px blue; display:inline-block;
+        background-image:url(美女1.jpg); background-size:contain; background-repeat:no-repeat;"></div>
+    <div id="div2" style="width:400px;height:800px; border:solid 1px blue; display:inline-block;
+        background-image:url(美女1.jpg); background-size:contain; background-repeat:no-repeat;"></div>
+
+
+
+    <script type="text/javascript">
+
+
+        // 创建 动画1
+        var ani1 = $animation.create(imgAction1, 40);
+        ani1.divHeight = 600;
+        ani1.divImgStep = 2;
+        var divImg = document.getElementById("div1");
+        ani1.divImg = divImg;
+
+        // 创建 动画2
+        var ani2 = $animation.create(imgAction2, 40);
+        ani2.divWidth = 400;
+        ani2.divImgStep = 2;
+        var divImg = document.getElementById("div2");
+        ani2.divImg = divImg;
+
+        // 开始动画
+        $animation.start(ani1);
+        $animation.start(ani2);
+
+
+        function imgAction1(ani) {
+            var top = ((ani.stepCount * ani.divImgStep) + (-1 * ani.divHeight));
+
+            if (top > 0)
+                top = 0;
+
+            ani.divImg.style.backgroundPositionY = top + "px";
+
+            if (top == 0)
+                $animation.stop(ani);
+
+            ani.stepCount++;
+
+        }
+
+        function imgAction2(ani) {
+            var left = ((ani.stepCount * ani.divImgStep) + (-1 * ani.divWidth));
+
+            if (left > 0)
+                left = 0;
+
+            ani.divImg.style.backgroundPositionX = left + "px";
+
+            if (left == 0)
+                $animation.stop(ani);
+
+            ani.stepCount++;
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jlet.js"></script>
+    <script type="text/javascript" src="jlet_console.js"></script>
+    <script type="text/javascript">
+
+        $console.create();
+        $console.enableWrite = false;
+    </script>
+</head>
+<body>
+    <div id="div1"
+         style="border:1px solid blue; width:100%; height:100%">
+    </div>
+    <script type="text/javascript">
+        $dialog.createDialog(document.getElementById("div1"));
+    </script>
+</body>
+</html>

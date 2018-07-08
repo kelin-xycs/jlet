@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jlet.js"></script>
+    <script type="text/javascript">
+
+        function $picBox( imgUrl )
+        {
+            var div = document.createElement("div");
+            div.addEventListener("resize", new Function("$picBox.div_resize( this );"));
+            div.picBox = this;
+
+            var img = document.createElement("img");
+            img.src = imgUrl;
+            img.addEventListener("load", new Function("$picBox.img_load( this );"))
+            img.picBox = this;
+
+            div.appendChild(img);
+
+            this.div = div;
+            this.img = img;
+
+        }
+
+        $picBox.img_load = function img_load( img )
+        {
+            var picBox = img.picBox;
+
+            picBox.imgWidthHeightRate = img.offsetWidth / img.offsetHeight;
+
+            $picBox.div_resize(picBox.div);
+        }
+
+        $picBox.div_resize = function div_resize( div )
+        {
+           
+            var picBox = div.picBox;
+            var img = picBox.img;
+
+            var dialogDiv = div.parentElement;
+
+            div.style.width = (dialogDiv.offsetWidth - 8) + "px";
+            div.style.height = (dialogDiv.offsetHeight - 8) + "px";
+
+            
+            if (div.offsetWidth / div.offsetHeight > picBox.imgWidthHeightRate)
+            {
+                
+                img.style.height = div.offsetHeight + "px";
+                img.style.width = (div.offsetHeight * picBox.imgWidthHeightRate) + "px";
+            }
+            else
+            {
+                img.style.width = div.offsetWidth + "px";
+                img.style.height = (div.offsetWidth / picBox.imgWidthHeightRate) + "px";
+            }
+        }
+
+        //$console.create();
+    </script>
+</head>
+<body>
+    <div style="font-size:60px">
+        拖拖看<br />
+        可将鼠标放在对话框边缘调整对话框大小<br />
+        图片可按原始比例自适应相框
+    </div>
+    <script type="text/javascript">
+
+        var picBox = new $picBox("美女1.jpg");
+
+        picBox.div.style.overflow = "hidden";
+        picBox.div.style.boxShadow = "0px 0px 10px #f00";
+
+        var div = $dialog.createDialog(picBox.div, null, null, 300, 400, new Function("$picBox.div_resize(picBox.div)"));
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jlet.js"></script>
+    <script type="text/javascript">
+
+        var tip1Arg = new Object();
+        var tip2Arg = new Object();
+        var tip3Arg = new Object();
+        var tip4Arg = new Object();
+
+    </script>
+</head>
+<body>
+    <div style="font-size:60px;margin-top:480px">
+        可使用鼠标拖动图片，<br />可用鼠标滚轮缩放图片
+    </div>
+    <div id="div1" style="width:300px;height:430px; border:solid 0px blue; display:inline-block;overflow:hidden;"
+         onmousewheel="zoom_mousewheel2(this); return false;">
+        <div style="width:100%;height:100%">
+            <img style="width:100%;display:block" src="images/美女1-1.jpg" onload="tip1Arg.isDefaultImgLoad = true;" />
+        </div>
+    </div>
+
+    <div id="div2" style="width:200px;height:320px; border:solid 0px blue; display:inline-block;overflow:hidden;"
+         onmousewheel="zoom_mousewheel2(this); return false;">
+        <div style="width:100%;height:100%">
+            <img style="width:100%;display:block" src="images/美女2-1.jpg" onload="tip2Arg.isDefaultImgLoad = true;" />
+        </div>
+    </div>
+
+    <div id="div3" style="width:200px;height:320px; border:solid 0px blue; display:inline-block;overflow:hidden;"
+         onmousewheel="zoom_mousewheel2(this); return false;">
+        <div style="width:100%;height:100%">
+            <img style="width:100%;display:block" src="images/美女3-1.jpg" onload="tip3Arg.isDefaultImgLoad = true;" />
+        </div>
+    </div>
+
+    <div id="div4" style="width:400px;height:600px; border:solid 0px blue; display:inline-block;overflow:hidden;"
+         onmousewheel="zoom_mousewheel2(this); return false;">
+        <div style="width:100%;height:100%">
+            <img style="width:100%;display:block" src="images/美女4-1.jpg" onload="tip4Arg.isDefaultImgLoad = true;" />
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        tip1Arg.div = document.getElementById("div1");
+        tip1Arg.imgNamePrefix = "美女1-";
+        tip1Arg.startImgSeq = 1;
+        tip1Arg.imgSeq = tip1Arg.startImgSeq;
+        tip1Arg.maxImgSeq = 6;
+        tip1Arg.showInterval = 2000;
+        tip1Arg.showInterval2 = 40;
+        tip1Arg.pxStepCount = 400;
+
+        tip2Arg.div = document.getElementById("div2");
+        tip2Arg.imgNamePrefix = "美女2-";
+        tip2Arg.startImgSeq = 1;
+        tip2Arg.imgSeq = tip2Arg.startImgSeq;
+        tip2Arg.maxImgSeq = 6;
+        tip2Arg.showInterval = 4000;
+        tip2Arg.showInterval2 = 40;
+        tip2Arg.pxStepCount = 400;
+
+        tip3Arg.div = document.getElementById("div3");
+        tip3Arg.imgNamePrefix = "美女3-";
+        tip3Arg.startImgSeq = 1;
+        tip3Arg.imgSeq = tip3Arg.startImgSeq;
+        tip3Arg.maxImgSeq = 8;
+        tip3Arg.showInterval = 7000;
+        tip3Arg.showInterval2 = 40;
+        tip3Arg.pxStepCount = 400;
+
+        tip4Arg.div = document.getElementById("div4");
+        tip4Arg.imgNamePrefix = "美女4-";
+        tip4Arg.startImgSeq = 1;
+        tip4Arg.imgSeq = tip4Arg.startImgSeq;
+        tip4Arg.maxImgSeq = 6;
+        tip4Arg.showInterval = 6000;
+        tip4Arg.showInterval2 = 40;
+        tip4Arg.pxStepCount = 400;
+
+
+        $dialog.createDialog(tip1Arg.div, 20, 20);
+        $dialog.createDialog(tip2Arg.div, 400, 20);
+        $dialog.createDialog(tip3Arg.div, 500, 300);
+        $dialog.createDialog(tip4Arg.div, 800, 50);
+
+
+        var ani = $animation.create(showTips, 10);
+        $animation.start(ani);
+
+
+        function showTips(ani) {
+
+            tip1Arg.stepInterval = ani.interval;
+            showTip(tip1Arg);
+
+            tip2Arg.stepInterval = ani.interval;
+            showTip(tip2Arg);
+
+            tip3Arg.stepInterval = ani.interval;
+            showTip(tip3Arg);
+
+            tip4Arg.stepInterval = ani.interval;
+            showTip(tip4Arg);
+        }
+
+        function showTip(arg) {
+
+            if (arg.stepCount == undefined) {
+                arg.stepCount = -1;
+                return;
+            }
+            else {
+                arg.stepCount++;
+            }
+
+            var div = arg.div;
+
+            if (arg.isDefaultImgLoad == undefined || arg.isDefaultImgLoad != true)
+                return;
+
+            if ((arg.stepCount * arg.stepInterval < arg.showInterval) && (arg.isShowing == undefined || arg.isShowing != true))
+                return;
+            else
+                arg.isShowing = true;
+
+            var divCurrent;
+            var divNext;
+
+            if (arg.divNext == undefined || arg.divNext == null) {
+
+                var d = document.createElement("div");
+                d.style.width = "100%";
+                d.style.height = "100%";
+                d.style.marginTop = (-1 * div.offsetHeight) + "px";
+
+                var img = document.createElement("img");
+                img.style.width = "100%";
+
+                arg.imgSeq++;
+                if (arg.imgSeq > arg.maxImgSeq)
+                    arg.imgSeq = arg.startImgSeq;;
+                img.src = "images/" + arg.imgNamePrefix + arg.imgSeq + ".jpg";
+
+                img.tipArg = arg;
+                img.addEventListener("load", new Function("this.tipArg.isNextImgLoad = true;"));
+
+                d.appendChild(img);
+
+                div.insertBefore(d, div.childNodes[0]);
+
+                arg.divNext = d;
+
+                return;
+            }
+
+            if (arg.isNextImgLoad == undefined || arg.isNextImgLoad != true)
+                return;
+
+            var divNext = arg.divNext;
+
+            if (arg.stepCount2 == undefined)
+                arg.stepCount2 = 0;
+
+            if (arg.stepCount2 * arg.interval < arg.showInterval2)
+                return;
+
+            var newMarginTop = (arg.stepCount2 + 1) * (divNext.offsetHeight / arg.pxStepCount) - divNext.offsetHeight;
+
+            if (newMarginTop > 0)
+                newMarginTop = 0;
+
+            divNext.style.marginTop = newMarginTop + "px";
+
+            if (newMarginTop == 0) {
+                arg.stepCount = 0;
+                arg.stepCount2 = 0;
+                arg.isShowing = false;
+                arg.divNext = null;
+
+                div.removeChild(div.getElementsByTagName("div")[1]);
+            }
+
+            arg.stepCount2++;
+
+        }
+
+        function zoom_mousewheel2(elemt) {
+            var e = window.event;
+
+            var div = elemt.parentElement;
+
+            if (elemt.widthHeightRate == undefined)
+                elemt.widthHeightRate = div.offsetHeight / div.offsetWidth;
+
+            var originWidth = div.offsetWidth;
+            var originHeight = div.offsetHeight;
+
+            var newWidth = elemt.offsetWidth + (-1 * e.wheelDelta);
+
+            if (newWidth < 200)
+                newWidth = 200;
+
+            var newHeight = newWidth * elemt.widthHeightRate;
+
+            if (newHeight < 150)
+                newHeight = 150;
+
+            elemt.style.width = newWidth + "px";
+
+            elemt.style.height = (newWidth * elemt.widthHeightRate) + "px";
+
+            div.style.left = (div.offsetLeft - (div.offsetWidth - originWidth) / 2) + "px";
+            div.style.top = (div.offsetTop - (div.offsetHeight - originHeight) / 2) + "px";
+
+        }
+
+
+    </script>
+
+
+</body>
+</html>

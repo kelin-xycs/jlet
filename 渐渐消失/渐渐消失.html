@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jlet.js"></script>
+    <script type="text/javascript">
+
+        function btnReplay_Click()
+        {
+            $animation.start(ani);
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="重复播放" style="font-size:60px" onclick="btnReplay_Click();" />
+    <div id="div1" style="height:200px; background-color:blue"></div>
+    <img id="img1" style="width:200px;" src="美女1.jpg" />
+    <script type="text/javascript">
+
+        var div1 = document.getElementById("div1");
+        var img1 = document.getElementById("img1");
+
+        var ani = $animation.create(ani_action, 50);
+        
+        $animation.start(ani);
+
+        function ani_action( ani )
+        {
+            var opa = 1 - 0.05 * ani.stepCount;
+
+            if (opa < 0)
+                opa = 0;
+
+            div1.style.opacity = opa;
+            img1.style.opacity = opa;
+
+            if (opa == 0)
+                $animation.stop(ani);
+
+            ani.stepCount++;
+        }
+    </script>
+</body>
+</html>

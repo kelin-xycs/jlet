@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="jlet.js"></script>
+</head>
+<body>
+    <div style="font-size:60px">拖拖看</div>
+    <div id="div1"
+         style="border:1px solid blue; width:200px; height:150px;">
+    </div>
+    <div id="div2"
+         style="border:1px solid blue; width:200px; height:150px; background-color:blue">
+    </div>
+    <div id="div3" style="width:850px;height:1203px; background-image:url(美女1.jpg)"></div>
+    <script type="text/javascript">
+        $dialog.createDialog(document.getElementById("div1"));
+        $dialog.createDialog(document.getElementById("div2"), 300, 200);
+        $dialog.createDialog(document.getElementById("div3"), 500, 150);
+    </script>
+</body>
+</html>

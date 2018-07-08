@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style type="text/css">
+        .colorBlock div {
+            width: 16px;
+            height: 16px;
+            margin: 2px;
+        }
+    </style>
+    <script type="text/javascript" src="jlet.js"></script>
+    <script type="text/javascript" src="jlet_dropDown.js"></script>
+    <script type="text/javascript" src="jlet_docEditor.js"></script>
+    <script type="text/javascript">
+
+        function ddlFont_change(ddl) {
+            var font = ddl.options[ddl.selectedIndex].text;
+
+            $docEditor.setFont(docEditor, font);
+        }
+
+        function ddlFontSize_change(ddl) {
+            var fontSize = ddl.options[ddl.selectedIndex].text;
+
+            $docEditor.setFontSize(docEditor, fontSize);
+        }
+
+        function ddnColor_select(divColor, elemtTrigger) {
+            var color = divColor.style.backgroundColor;
+            //$writeMsg(color);
+
+            $docEditor.setFontColor(docEditor, color);
+
+            $dropDown.close(elemtTrigger);
+        }
+    </script>
+</head>
+<body>
+    <select onchange="ddlFont_change(this);">
+        <option></option>
+        <option>Arial</option>
+        <option>宋体</option>
+        <option>微软雅黑</option>
+    </select>
+    <select onchange="ddlFontSize_change(this);">
+        <option></option>
+        <option>20px</option>
+        <option>30px</option>
+        <option>40px</option>
+        <option>50px</option>
+        <option>60px</option>
+    </select>
+    <div style="display:inline-block;width:20px;height:20px;margin-bottom:-3px;">
+        <div id="divColorTrigger" class="colorBlock" style="width:20px;height:20px;border:solid 1px gray;">
+            <div style="background-color:red"></div>
+        </div>
+        <div id="divColorDrop" class="colorBlock" style="position:absolute;width:20px;border:solid 1px gray;">
+            <div style="background-color:yellow" onmousedown="ddnColor_select(this, document.getElementById('divColorTrigger'));"></div>
+            <div style="background-color:red" onmousedown="ddnColor_select(this, document.getElementById('divColorTrigger'));"></div>
+            <div style="background-color:green" onmousedown="ddnColor_select(this, document.getElementById('divColorTrigger'));"></div>
+            <div style="background-color:blue" onmousedown="ddnColor_select(this, document.getElementById('divColorTrigger'));"></div>
+            <div style="background-color:black" onmousedown="ddnColor_select(this, document.getElementById('divColorTrigger'));"></div>
+        </div>
+    </div>
+
+    <div id="divEditArea" style="width:600px; min-height:500px; border:solid 1px gray; background-color:white;padding:40px"></div>
+
+    <script type="text/javascript">
+
+        var divColorTrigger = document.getElementById("divColorTrigger");
+        var divColorDrop = document.getElementById("divColorDrop");
+
+        $dropDown.create(divColorTrigger, divColorDrop);
+
+
+        var docEditor = $docEditor.createNew();
+
+        docEditor.id = "docEditor1";
+        docEditor.div = document.getElementById("divEditArea");
+
+        $docEditor.create(docEditor);
+
+    </script>
+</body>
+</html>
